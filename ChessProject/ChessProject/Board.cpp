@@ -1,6 +1,6 @@
 #include "Board.h"
 
-Board::Board()
+Board::Board() // default constructor
 {
 	this->_pieces = new Piece[64];
 	this->_width = 8;
@@ -11,7 +11,7 @@ Board::Board()
 	this->_turnNum = 0;
 }
 
-Board::Board(Piece* pieces, int width, int length, int startingColor, King* whiteKing, King* blackKing)
+Board::Board(Piece* pieces, int width, int length, int startingColor, King* whiteKing, King* blackKing) // value constructor
 {
 	this->_pieces = pieces;
 	this->_width = width;
@@ -22,13 +22,14 @@ Board::Board(Piece* pieces, int width, int length, int startingColor, King* whit
 	this->_turnNum = 0;
 }
 
-Board::~Board()
+Board::~Board() // destructor
 {
 	delete this->_blackKing;
 	delete this->_whiteKing;
 	delete this->_pieces;
 }
 
+// getters
 Piece* Board::getPieces() const { return this->_pieces; }
 int Board::getWidth() const { return this->_width; }
 int Board::getLength() const { return this->_length; }
@@ -39,7 +40,7 @@ King* Board::getBlackKing() const { return this->_blackKing; }
 //bool Board::isEmpty(Cord c) const
 //{
 //	int index = c.getX() * c.getY();
-//	if (this->_pieces[index].getType == '#') return true;
+//	if (this->_pieces[index].getType() == '#') return true;
 //	else return false;
 //}
 
