@@ -128,11 +128,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\filesForProject\Source.cpp" />
+    <ClCompile Include="..\..\filesForProject\stdafx.cpp" />
+    <ClCompile Include="Board.cpp" />
     <ClCompile Include="Cord.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cord.h" />
+    <ClInclude Include="..\..\filesForProject\Pipe.h" />
+    <ClInclude Include="..\..\filesForProject\stdafx.h" />
+    <ClInclude Include="..\..\filesForProject\targetver.h" />
+    <ClInclude Include="Board.h" />
+    <ClInclude Include="Cord.h" />
+    <ClInclude Include="King.h" />
+    <ClInclude Include="Piece.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
