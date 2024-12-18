@@ -1,23 +1,19 @@
 #pragma once
 
 #include "Cord.h"
+#include "Board.h"
+
+class Board;
 
 class Piece
 {
 private:
 	Cord* _position;
 	char _type;
-	bool isBlack;
+	bool _isBlack;
 	Board* _board;
 
 public:
-	Piece();
-	Piece(Cord* pos, char type, bool isBlack, Board board);
-	Piece(const Piece& other);
-
-	~Piece();
-	Piece& operator=(const Piece& other);
-
 	Cord* getCord() const;
 	char getType() const;
 	bool getIsBlack() const;

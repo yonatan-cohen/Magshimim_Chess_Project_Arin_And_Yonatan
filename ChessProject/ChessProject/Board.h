@@ -5,7 +5,6 @@
 
 class Piece;
 class King;
-class Cord;
 
 class Board
 {
