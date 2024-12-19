@@ -22,6 +22,6 @@ public:
 	bool getIsBlack() const;
 	Board* getBoard() const;
 
-	bool move(Cord dest);
-	virtual bool isValidMove(Cord dest) = 0;
+	int move(Cord dest);
+	virtual bool isValidMove(Cord dest, int& code) = 0;
 };

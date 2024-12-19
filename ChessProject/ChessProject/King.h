@@ -11,5 +11,5 @@ public:
 
     King(Cord position, bool isBlack, Board* board);
 
-    bool isValidMove(Cord dest);
+    bool isValidMove(Cord dest) override;
 };

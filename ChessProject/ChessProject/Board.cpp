@@ -1,4 +1,6 @@
 #include "Board.h"
+#include <iostream>
+#include <string>
 
 Board::Board() // default constructor
 {
@@ -40,18 +42,45 @@ int Board::getStartingColor() const { return this->_startingColor; }
 King* Board::getWhiteKing() const { return this->_whiteKing; }
 King* Board::getBlackKing() const { return this->_blackKing; }
 
-//bool Board::isEmpty(Cord c) const
-//{
-//	int index = c.getX() * c.getY();
-//	if (this->_pieces[index].getType() == '#') return true;
-//	else return false;
-//}
+// function returns if cord on board is empty
+bool Board::isEmpty(Cord c) const
+{
+	int index = c.getX() * c.getY();
+	if (this->_pieces[index]->getType() == '#') return true;
+	else return false;
+}
 
-//void Board::update(std::string info)
-//{
-//	std::string cordStr = info.substr(info.length() - 2);
-//	Cord destCord = Cord::stringToCord(cordStr);
-//	int index = destCord.getX() * destCord.getY();
-//	if (this->_pieces[index].move(destCord) == true) this->_turnNum++;
-//	else error();
-//}
+// function uses fronend info to update board
+int Board::reciveFronendInfo(std::string inputPipeStr)
+{
+	std::string srcCordstr = inputPipeStr.substr(2, 3);
+	std::string dstCordstr = inputPipeStr.substr(0, 1);
+
+	Cord srcCord = Cord::stringToCord(srcCordstr);
+	Cord dstCord = Cord::stringToCord(dstCordstr);
+
+	int srcIndex = srcCord.getX() * srcCord.getY();
+	return this->_pieces[srcIndex]->move(dstCord);
+}
+
+// function returns the string that needs to be sent to frontend
+std::string Board::sendFrontendInfo(int code)
+{
+	std::string rString = "";
+	rString += std::to_string(code);
+	rString += '\0';
+	return rString;
+}
+
+// function makes the string that initializes frontend
+std::string Board::sendBoardToFrontend()
+{
+	std::string rString = "";
+
+	for (int i = 0; i < 64; i++)
+		rString += this->_pieces[i]->getType();
+
+	rString += std::to_string(this->_startingColor);
+	rString += '\0';
+	return rString;
+}

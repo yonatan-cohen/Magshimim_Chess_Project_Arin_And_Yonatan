@@ -36,6 +36,7 @@ public:
 	void update(std::string info);
 
 	//fix later
-	//std::string reciveFronendInfo(Pipe& inputPipe);
-	//void sendFrontendInfo(Pipe& inputPipe);
+	int reciveFronendInfo(std::string inputPipe);
+	std::string sendFrontendInfo(int code);
+	std::string sendBoardToFrontend();
 };

@@ -12,12 +12,13 @@ bool Piece::getIsBlack() const { return this->_isBlack; }
 Board* Piece::getBoard() const { return this->_board; }
 
 // function sets new Piece position if the move is valid
-bool Piece::move(Cord dest)
+int Piece::move(Cord dest)
 {
-	if (this->isValidMove(dest))
+	int code = -1;
+	if (this->isValidMove(dest, code))
 	{
 		this->_position = dest;
-		return true;
+		this->_board->_turnNum++;
 	}
-	else return false;
+	return code;
 }
