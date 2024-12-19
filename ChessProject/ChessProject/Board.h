@@ -34,7 +34,6 @@ public:
 
 	bool isEmpty(Cord c) const;
 
-	//fix later
 	int reciveFronendInfo(std::string inputPipe);
 	std::string sendFrontendInfo(int code);
 	std::string sendBoardToFrontend();
