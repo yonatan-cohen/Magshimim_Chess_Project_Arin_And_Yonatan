@@ -4,6 +4,7 @@
 #include "Board.h"
 
 class Board;
+class King;
 
 class Piece
 {

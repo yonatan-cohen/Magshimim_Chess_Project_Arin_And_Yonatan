@@ -25,7 +25,7 @@ public:
 	Board(Piece** pieces, int width, int length, int startingColor, King* whiteKing, King* blackKing);
 	~Board();
 
-	Piece* getPieces() const;
+	Piece** getPieces() const;
 	int getWidth() const;
 	int getLength() const;
 	int getStartingColor() const;

@@ -33,7 +33,7 @@ Board::~Board() // destructor
 }
 
 // getters
-Piece* Board::getPieces() const { return this->_pieces; }
+Piece** Board::getPieces() const { return this->_pieces; }
 int Board::getWidth() const { return this->_width; }
 int Board::getLength() const { return this->_length; }
 int Board::getStartingColor() const { return this->_startingColor; }
