@@ -8,13 +8,15 @@ class Board;
 class Piece
 {
 private:
-	Cord* _position;
+	Cord _position;
 	char _type;
 	bool _isBlack;
 	Board* _board;
 
 public:
-	Cord* getCord() const;
+	virtual ~Piece();
+
+	Cord getCord() const;
 	char getType() const;
 	bool getIsBlack() const;
 	Board* getBoard() const;

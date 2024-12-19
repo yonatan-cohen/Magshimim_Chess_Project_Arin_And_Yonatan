@@ -2,7 +2,10 @@
 
 Board::Board() // default constructor
 {
-	this->_pieces = new Piece[64];
+	this->_pieces = new Piece* [64];
+	for (int i = 0; i < 64; ++i)
+		this->_pieces[i] = nullptr;
+
 	this->_width = 8;
 	this->_length = 8;
 	this->_startingColor = 0; // white
@@ -11,7 +14,7 @@ Board::Board() // default constructor
 	this->_turnNum = 0;
 }
 
-Board::Board(Piece* pieces, int width, int length, int startingColor, King* whiteKing, King* blackKing) // value constructor
+Board::Board(Piece** pieces, int width, int length, int startingColor, King* whiteKing, King* blackKing) // value constructor
 {
 	this->_pieces = pieces;
 	this->_width = width;

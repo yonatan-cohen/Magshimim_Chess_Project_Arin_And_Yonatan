@@ -9,7 +9,7 @@ class King;
 class Board
 {
 private:
-	Piece* _pieces;
+	Piece** _pieces;
 
 	int _width;
 	int _length;
@@ -22,7 +22,7 @@ public:
 	static int _turnNum;
 
 	Board();
-	Board(Piece* pieces, int width, int length, int startingColor, King* whiteKing, King* blackKing);
+	Board(Piece** pieces, int width, int length, int startingColor, King* whiteKing, King* blackKing);
 	~Board();
 
 	Piece* getPieces() const;
