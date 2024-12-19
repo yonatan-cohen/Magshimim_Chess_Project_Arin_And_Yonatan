@@ -33,7 +33,6 @@ public:
 	King* getBlackKing() const;
 
 	bool isEmpty(Cord c) const;
-	void update(std::string info);
 
 	//fix later
 	int reciveFronendInfo(std::string inputPipe);
