@@ -9,10 +9,10 @@ public:
     King() : Piece('K') 
     {}
     King(Board* board);
-
-    King(const Cord& position, const bool isBlack,Board& board,const char type);
+    King(const char type) : Piece(type) {}
+    King(const Cord& position, const bool isBlack,Board* board,const char type);
     ~King() {}
 
-    bool isValidMove(Cord dest) override;
+    int isValidMove(Cord dest) override;
 };
 

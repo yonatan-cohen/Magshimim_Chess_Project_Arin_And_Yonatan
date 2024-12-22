@@ -47,11 +47,11 @@ int Cord::getY() const { return _y; }
 
 Cord Cord::stringToCord(std::string cord_string) // converts string to cord
 {
-    if (cord_string.length() != 4)
+    if (cord_string.length() != 2)
         return Cord();
     
-    int x = getGeometricValue(cord_string[0]);
-    int y = cord_string[1] - '0';
+    int x = getGeometricValue(cord_string[0]) - 1;
+    int y = 8 - (cord_string[1] - '0');
 
     if (x < 1 || x > 8 || y < 1 || y > 8) return Cord();
 

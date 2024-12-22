@@ -38,7 +38,8 @@ public:
 	{
 		this->_isBlack = false;
 		this->_position = Cord();
-	};
+	}
+	Piece(const Cord position, const bool isBlack, Board* board, const char type);
 	virtual ~Piece() {}
 
 	Cord getCord() const;
@@ -47,5 +48,5 @@ public:
 	Board* getBoard() const;
 
 	int move(Cord dest);
-	virtual bool isValidMove(Cord dest) = 0;
+	virtual int isValidMove(Cord dest) = 0;
 };

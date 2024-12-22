@@ -11,6 +11,14 @@
 
 //Piece::~Piece() {} // destructor
 
+Piece::Piece(const Cord position, const bool isBlack, Board* board, const char type)
+{
+	this->_position = position;
+	this->_isBlack = isBlack;
+	this->_board = board;
+	this->_type = type;
+}
+
 // getters
 Cord Piece::getCord() const { return this->_position; }
 
@@ -24,10 +32,15 @@ Board* Piece::getBoard() const { return this->_board; }
 int Piece::move(Cord dest)
 {
 	int code = -1;
-	if (this->isValidMove(dest))
+	code = this->isValidMove(dest);
+	if (code == 0 || code == 1 || code == 8)
 	{
-		this->_position = dest;
+		Piece* p = &this->_board->getPieces()[dest.getY()][dest.getX()];
+		this->_board->getPieces()[dest.getY()][dest.getX()] = *this;
+		this->_board->getPieces()[this->getCord().getY()][this->getCord().getX()]._type = '#';
+		this->_board->getPieces()[dest.getY()][dest.getX()]._position = dest;
 		this->_board->_turnNum++;
+		this->_board->_turn = !this->_board->_turn;
 	}
 	return code;
 }

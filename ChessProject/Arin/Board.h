@@ -1,6 +1,9 @@
 #pragma once
 #include "Cord.h"
 #include "Piece.h"
+#include <iostream>
+using namespace std;
+
 class Piece;
 class King;
 
@@ -17,6 +20,11 @@ private:
 	King* _blackKing;
 
 public:
+	/*
+	* current player turn
+	* false for white, true for black
+	*/
+	bool _turn;
 	static int _turnNum;
 
 
@@ -30,6 +38,7 @@ public:
 	int getStartingColor() const;
 	King* getWhiteKing() const;
 	King* getBlackKing() const;
+	string BoardToStirng() const;
 
 	bool isEmpty(Cord c) const;
 

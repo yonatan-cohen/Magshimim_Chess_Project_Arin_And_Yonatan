@@ -4,16 +4,16 @@ It is recommended to use the following code in your project,
 in order to read and write information from and to the Backend
 */
 
-//#include "Pipe.h"
-//#include <iostream>
-//#include <thread>
-//#include "B"
-//
-//using std::cout;
-//using std::endl;
-//using std::string;
-//
-//
+#include "Pipe.h"
+#include <iostream>
+#include <thread>
+#include "B"
+
+using std::cout;
+using std::endl;
+using std::string;
+
+
 //void main()
 //{
 //	srand(time_t(NULL));
