@@ -36,11 +36,14 @@ int Piece::move(Cord dest)
 	if (code == 0 || code == 1 || code == 8)
 	{
 		Piece* p = &this->_board->getPieces()[dest.getY()][dest.getX()];
+		Piece* p1 = &this->_board->getPieces()[this->getCord().getY()][this->getCord().getX()];
 		this->_board->getPieces()[dest.getY()][dest.getX()] = *this;
 		this->_board->getPieces()[this->getCord().getY()][this->getCord().getX()]._type = '#';
 		this->_board->getPieces()[dest.getY()][dest.getX()]._position = dest;
+		this->_board->getPieces()[this->getCord().getY()][this->getCord().getX()]._isBlack = false;
 		this->_board->_turnNum++;
 		this->_board->_turn = !this->_board->_turn;
+		
 	}
 	return code;
 }

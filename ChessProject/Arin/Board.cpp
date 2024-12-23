@@ -22,7 +22,30 @@ Board::Board() // default constructor
 	{
 		for (j = 0; j < 8; j++)
 		{
-			this->_pieces[i][j] = King(Cord(j,i), islower(sb[i * 8 + j]),this, sb[i * 8 + j]);
+			this->_pieces[i][j] = King(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+			//make each piece it's type
+			switch (sb[i * 8 + j])
+			{
+			case '#':
+				break;
+			case 'p':
+			case 'P':
+				break;
+			case 'r':
+			case 'R':
+				break;
+			case 'n':
+			case 'N':
+				break;
+			case 'b':
+			case 'Q':
+				break;
+			case 'k':
+			case 'K':
+				break;
+			default:
+				break;
+			}
 		}
 	}
 

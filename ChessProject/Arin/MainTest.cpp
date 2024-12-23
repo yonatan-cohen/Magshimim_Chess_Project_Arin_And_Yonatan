@@ -61,6 +61,8 @@ void main()
 	{
 		// should handle the string the sent from graphics
 		// according the protocol. Ex: e2e4           (move e2 to e4)
+		cout << "before:" << endl;
+		cout << b->BoardToStirng() << endl;
 		c = b->reciveFronendInfo(msgFromGraphics);
 		// YOUR CODE
 		msgToGraphics[0] = (char)(c + '0');
@@ -77,6 +79,7 @@ void main()
 		// return result to graphics		
 		p.sendMessageToGraphics(msgToGraphics);
 
+		cout << "after:" << endl;
 		cout << b->BoardToStirng() << endl;
 		// get message from graphics
 		msgFromGraphics = p.getMessageFromGraphics();

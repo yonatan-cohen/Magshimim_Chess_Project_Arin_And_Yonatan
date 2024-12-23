@@ -14,11 +14,12 @@ King::King(const Cord& position, const bool isBlack, Board* board, const char ty
 
 int King::isValidMove(Cord dest)
 {
+	Board* temp = this->getBoard();
 	int c = -1;
 	int d = 0;
 	int x = 0;
 	int y = 0;
-	if (this->getBoard()->_turn == this->getIsBlack() && this->getType() != '#')
+	if (temp->_turn == this->getIsBlack() && this->getType() != '#')
 	{
 		c = 0;
 		x = this->getCord().getX() - dest.getX();
@@ -27,11 +28,11 @@ int King::isValidMove(Cord dest)
 		if (d == 1 || (d == 2 && x==1 && y==1))
 		{
 			c = 0;
-			if (this->getBoard()->isEmpty(dest))
+			if (temp->isEmpty(dest))
 			{
 				c = 0;
 			}
-			else if (this->getBoard()->getPieces()[dest.getX()][dest.getY()].getIsBlack() != this->getBoard()->_turn)
+			else if (temp->getPieces()[dest.getY()][dest.getX()].getIsBlack() != temp->_turn)
 			{
 				c = 1;
 			}
