@@ -38,8 +38,6 @@ public:
 	int getStartingColor() const;
 	King* getWhiteKing() const;
 	King* getBlackKing() const;
-	string BoardToStirng() const;
-
 	bool isEmpty(Cord c) const;
 	bool isEmptyLine(Cord src, Cord dest) const;
 

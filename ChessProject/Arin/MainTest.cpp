@@ -47,7 +47,7 @@ void main()
 	// msgToGraphics should contain the board string accord the protocol
 	// YOUR CODE
 	Board* b = new Board();
-	strcpy_s(msgToGraphics, b->BoardToStirng().c_str()); // just example...
+	strcpy_s(msgToGraphics, b->sendBoardToFrontend().c_str()); // just example...
 
 	p.sendMessageToGraphics(msgToGraphics);   // send the board string
 
@@ -61,13 +61,8 @@ void main()
 	{
 		// should handle the string the sent from graphics
 		// according the protocol. Ex: e2e4           (move e2 to e4)
-		cout << "before:" << endl;
-		cout << b->BoardToStirng() << endl;
 		c = b->reciveFronendInfo(msgFromGraphics);
-		// YOUR CODE
-		msgToGraphics[0] = (char)(c + '0');
-		msgToGraphics[1] = 0;
-		//strcpy_s(msgToGraphics, "YOUR CODE"); // msgToGraphics should contain the result of the operation
+		strcpy_s(msgToGraphics, b->sendFrontendInfo(c).c_str()); // msgToGraphics should contain the result of the operation
 
 		///******* JUST FOR EREZ DEBUGGING ******/
 		//int r = rand() % 10; // just for debugging......
@@ -79,8 +74,6 @@ void main()
 		// return result to graphics		
 		p.sendMessageToGraphics(msgToGraphics);
 
-		cout << "after:" << endl;
-		cout << b->BoardToStirng() << endl;
 		// get message from graphics
 		msgFromGraphics = p.getMessageFromGraphics();
 	}

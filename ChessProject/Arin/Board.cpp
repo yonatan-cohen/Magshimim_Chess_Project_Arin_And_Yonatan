@@ -100,6 +100,7 @@ bool Board::isEmpty(Cord c) const
 	return ((*this->_pieces[c.getY() * 8 + c.getX()]).getType() == '#');
 }
 
+//function returns if line made by 2 cords is empty
 bool Board::isEmptyLine(Cord src, Cord dst) const
 {
 	bool notEmpty = false;
@@ -143,21 +144,7 @@ bool Board::isEmptyLine(Cord src, Cord dst) const
 	return !notEmpty;
 }
 
-string Board::BoardToStirng() const
-{
-	string sBoard = "";
-	int i = 0;
-	int j = 0;
-	for ( i = 0; i < this->getLength(); i++)
-	{
-		for ( j = 0; j < this->getWidth(); j++)
-		{
-			sBoard += (*this->_pieces[i*8 + j]).getType();
-		}
-	}
-	sBoard += this->getStartingColor() + '0';
-	return sBoard;
-}
+
 
 // function uses fronend info to update board
 int Board::reciveFronendInfo(std::string inputPipeStr)
