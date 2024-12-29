@@ -1,9 +1,10 @@
-#include "Rook.h"
+#include "Bishop.h"
 
-Rook::Rook(const Cord& position, const bool isBlack, Board* board, const char type) : Piece(position, isBlack, board, type)
-{}
+Bishop::Bishop(const Cord& position, const bool isBlack, Board* board, const char type) :
+	Piece(position,isBlack, board,type)
+{	}
 
-int Rook::isValidMove(Cord dest)
+int Bishop::isValidMove(Cord dest)
 {
 	int c = -1;
 
@@ -19,7 +20,7 @@ int Rook::isValidMove(Cord dest)
 	{
 		x = this->getCord().getX() - dest.getX();
 		y = this->getCord().getY() - dest.getY();
-		if (!x || !y)
+		if (x && y)
 		{
 			if (temp->isEmptyLine(this->getCord(), dest))
 			{

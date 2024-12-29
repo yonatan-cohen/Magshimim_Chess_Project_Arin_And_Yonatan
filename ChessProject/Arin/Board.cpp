@@ -1,11 +1,13 @@
-#include "Board.h"
-#include "King.h"
-#include "Rook.h"
 #include <iostream>
 #include <string>
 #include <cstring>
 #include <cctype>
 #include <iostream>
+
+#include "Board.h"
+#include "King.h"
+#include "Rook.h"
+#include "Bishop.h"
 
 int Board::_turnNum = 0;
 
@@ -40,7 +42,7 @@ Board::Board() // default constructor
 				break;
 			case 'b':
 			case 'B':
-				this->_pieces[i * 8 + j] = new King(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+				this->_pieces[i * 8 + j] = new Bishop(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				break;
 			case 'q':
 			case 'Q':
