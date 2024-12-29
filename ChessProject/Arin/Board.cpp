@@ -107,25 +107,37 @@ bool Board::isEmptyLine(Cord src, Cord dst) const
 	int ix, iy;
 	x = dst.getX() - src.getX();
 	y = dst.getY() - src.getY();
+	ix = src.getX();
+	iy = src.getY();
+	if (x < 0)
+	{
+		ix = dst.getX();
+	}
+	if (y < 0)
+	{
+		iy = dst.getY();
+	}
+	x = abs(x);
+	y = abs(y);
 	if (x && !y)
 	{
 		for (i = 1; i < x; i++)
 		{
-			notEmpty += !(this->isEmpty(Cord(src.getX() + i, src.getY())));
+			notEmpty += !(this->isEmpty(Cord(ix + i, iy)));
 		}
 	}
 	else if(y && !x)
 	{
 		for (i = 1; i < y; i++)
 		{
-			notEmpty += !(this->isEmpty(Cord(src.getX(), src.getY() + i)));
+			notEmpty += !(this->isEmpty(Cord(ix, iy + i)));
 		}
 	}
 	else
 	{
 		for (i = 1; i < x; i++)
 		{
-			notEmpty += !(this->isEmpty(Cord(src.getX() + i, src.getY() + i)));
+			notEmpty += !(this->isEmpty(Cord(ix + i, iy + i)));
 		}
 	}
 	return !notEmpty;
