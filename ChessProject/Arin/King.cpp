@@ -4,13 +4,9 @@
 #include <iostream>
 #include <cstring>
 
-King::King(Board* board) : Piece(board,'k')
-{
-}
 
 King::King(const Cord& position, const bool isBlack, Board* board, const char type) : Piece(position,isBlack,board,type)
-{
-}
+{}
 
 int King::isValidMove(Cord dest)
 {
@@ -19,20 +15,24 @@ int King::isValidMove(Cord dest)
 	int d = 0;
 	int x = 0;
 	int y = 0;
-	if (temp->_turn == this->getIsBlack() && this->getType() != '#')
+	if (dest.getX() > 7 || dest.getX() < 0 || dest.getY() > 7 || dest.getY() < 0)
+	{
+		c = 5;
+	}
+	else if (temp->_turn == this->getIsBlack() && this->getType() != '#')
 	{
 		c = 0;
 		x = this->getCord().getX() - dest.getX();
 		y = this->getCord().getY() - dest.getY();
 		d = sqrt(pow(x, 2) + pow(y, 2));
-		if (d == 1 || (d == 2 && x==1 && y==1))
+		if (d == 1)
 		{
 			c = 0;
 			if (temp->isEmpty(dest))
 			{
 				c = 0;
 			}
-			else if (temp->getPieces()[dest.getY()][dest.getX()].getIsBlack() != temp->_turn)
+			else if ((*temp->getPieces()[dest.getY() * 8 + dest.getX()]).getIsBlack() != temp->_turn)
 			{
 				c = 1;
 			}
@@ -49,10 +49,6 @@ int King::isValidMove(Cord dest)
 		{
 			c = 6;
 		}
-	}
-	else if (dest.getX() > 8 || dest.getY() > 8)
-	{
-		c = 5;
 	}
 	else
 	{

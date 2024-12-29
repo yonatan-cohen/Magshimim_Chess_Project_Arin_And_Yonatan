@@ -41,6 +41,7 @@ public:
 	string BoardToStirng() const;
 
 	bool isEmpty(Cord c) const;
+	bool isEmptyLine(Cord src, Cord dest) const;
 
 	int reciveFronendInfo(std::string inputPipe);
 	std::string sendFrontendInfo(int code);

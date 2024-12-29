@@ -1,13 +1,13 @@
 #include "Piece.h"
 
 
-//Piece::Piece()
-//{
-//	this->_board = nullptr;
-//	this->_isBlack = false;
-//	this->_position = Cord();
-//	this->_type = '#';
-//}
+Piece::Piece()
+{
+	this->_board = nullptr;
+	this->_isBlack = false;
+	this->_position = Cord();
+	this->_type = '#';
+}
 
 //Piece::~Piece() {} // destructor
 
@@ -35,12 +35,13 @@ int Piece::move(Cord dest)
 	code = this->isValidMove(dest);
 	if (code == 0 || code == 1 || code == 8)
 	{
-		Piece* p = &this->_board->getPieces()[dest.getY()][dest.getX()];
-		Piece* p1 = &this->_board->getPieces()[this->getCord().getY()][this->getCord().getX()];
-		this->_board->getPieces()[dest.getY()][dest.getX()] = *this;
-		this->_board->getPieces()[this->getCord().getY()][this->getCord().getX()]._type = '#';
-		this->_board->getPieces()[dest.getY()][dest.getX()]._position = dest;
-		this->_board->getPieces()[this->getCord().getY()][this->getCord().getX()]._isBlack = false;
+		Piece* p = this;
+		Piece* pd = this->_board->getPieces()[dest.getY() * 8 + dest.getX()];
+		this->_board->getPieces()[dest.getY()*8 + dest.getX()] = p;
+		this->_board->getPieces()[this->getCord().getY() * 8 + this->getCord().getX()] = pd;
+		pd->_type = '#';
+		pd->_isBlack = false;
+		p->_position = dest;
 		this->_board->_turnNum++;
 		this->_board->_turn = !this->_board->_turn;
 		

@@ -15,13 +15,7 @@ private:
 	Board* _board;
 
 public:
-	Piece()
-	{
-		this->_board = nullptr;
-		this->_isBlack = false;
-		this->_position = Cord();
-		this->_type = '#';
-	}
+	Piece();
 	Piece(const char type) : _type(type)
 	{
 		this->_board = nullptr;

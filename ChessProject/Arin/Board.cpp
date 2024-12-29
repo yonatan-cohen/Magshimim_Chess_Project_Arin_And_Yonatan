@@ -1,10 +1,11 @@
 #include "Board.h"
 #include "King.h"
+#include "Rook.h"
 #include <iostream>
 #include <string>
+#include <cstring>
 #include <cctype>
 #include <iostream>
-#include <cstring>
 
 int Board::_turnNum = 0;
 
@@ -13,35 +14,45 @@ Board::Board() // default constructor
 	string sb = "rnbqkbnrpppppppp################################PPPPPPPPRNBQKBNR1";
 	// i = 1-8 , j = a-e
 	int i = 0, j = 0;
-	this->_pieces = new Piece* [8];
-	for (i = 0; i < 8; i++)
-	{
-		this->_pieces[i] = new King[8];
-	}
+	this->_pieces = new Piece*[64];
 	for (i = 0; i < 8; i++)
 	{
 		for (j = 0; j < 8; j++)
 		{
-			this->_pieces[i][j] = King(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 			//make each piece it's type
 			switch (sb[i * 8 + j])
 			{
 			case '#':
+				//will be replaced by pawn later
+				this->_pieces[i*8 + j] = new King(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				break;
 			case 'p':
 			case 'P':
+				this->_pieces[i * 8 + j] = new King(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				break;
 			case 'r':
 			case 'R':
+				this->_pieces[i * 8 + j] = new Rook(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				break;
 			case 'n':
 			case 'N':
+				this->_pieces[i * 8 + j] = new King(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				break;
 			case 'b':
-			case 'Q':
+			case 'B':
+				this->_pieces[i * 8 + j] = new King(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				break;
-			case 'k':
+			case 'q':
+			case 'Q':
+				this->_pieces[i * 8 + j] = new King(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+				break;
+			case 'k': 
+				this->_blackKing = new King(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+				this->_pieces[i * 8 + j] = this->_blackKing;
+				break;
 			case 'K':
+				this->_whiteKing = new King(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+				this->_pieces[i * 8 + j] = this->_whiteKing;
 				break;
 			default:
 				break;
@@ -53,8 +64,6 @@ Board::Board() // default constructor
 	this->_length = 8;
 	this->_startingColor = 0; // white
 	this->_turn = this->_startingColor;
-	this->_whiteKing = new King(Cord(0,5),false, this, 'K');
-	this->_blackKing = new King(Cord(7,5),true, this,'k');
 	_turnNum = 0;
 }
 
@@ -88,8 +97,38 @@ King* Board::getBlackKing() const { return this->_blackKing; }
 // function returns if cord on board is empty
 bool Board::isEmpty(Cord c) const
 {
-	if (this->_pieces[c.getY()][c.getX()].getType() == '#') return true;
-	else return false;
+	return ((*this->_pieces[c.getY() * 8 + c.getX()]).getType() == '#');
+}
+
+bool Board::isEmptyLine(Cord src, Cord dst) const
+{
+	bool notEmpty = false;
+	int x, y, i;
+	int ix, iy;
+	x = dst.getX() - src.getX();
+	y = dst.getY() - src.getY();
+	if (x && !y)
+	{
+		for (i = 1; i < x; i++)
+		{
+			notEmpty += !(this->isEmpty(Cord(src.getX() + i, src.getY())));
+		}
+	}
+	else if(y && !x)
+	{
+		for (i = 1; i < y; i++)
+		{
+			notEmpty += !(this->isEmpty(Cord(src.getX(), src.getY() + i)));
+		}
+	}
+	else
+	{
+		for (i = 1; i < x; i++)
+		{
+			notEmpty += !(this->isEmpty(Cord(src.getX() + i, src.getY() + i)));
+		}
+	}
+	return !notEmpty;
 }
 
 string Board::BoardToStirng() const
@@ -101,7 +140,7 @@ string Board::BoardToStirng() const
 	{
 		for ( j = 0; j < this->getWidth(); j++)
 		{
-			sBoard += this->_pieces[i][j].getType();
+			sBoard += (*this->_pieces[i*8 + j]).getType();
 		}
 	}
 	sBoard += this->getStartingColor() + '0';
@@ -116,7 +155,7 @@ int Board::reciveFronendInfo(std::string inputPipeStr)
 
 	Cord srcCord = Cord::stringToCord(srcCordstr);
 	Cord dstCord = Cord::stringToCord(dstCordstr);
-	return this->_pieces[srcCord.getY()][srcCord.getX()].move(dstCord);
+	return (*this->_pieces[srcCord.getY()*8 + srcCord.getX()]).move(dstCord);
 }
 
 // function returns the string that needs to be sent to frontend
