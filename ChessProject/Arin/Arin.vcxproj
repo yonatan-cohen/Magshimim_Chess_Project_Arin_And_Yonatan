@@ -22,6 +22,7 @@
     <ClInclude Include="..\..\filesForProject\Pipe.h" />
     <ClInclude Include="..\..\filesForProject\stdafx.h" />
     <ClInclude Include="..\..\filesForProject\targetver.h" />
+    <ClInclude Include="..\ChessProject\Knight.h" />
     <ClInclude Include="Bishop.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="cord.h" />

@@ -8,9 +8,9 @@
 #include "King.h"
 #include "Rook.h"
 #include "Bishop.h"
+#include "Knight.h"
 
 int Board::_turnNum = 0;
-
 Board::Board() // default constructor
 {
 	string sb = "rnbqkbnrpppppppp################################PPPPPPPPRNBQKBNR1";
@@ -38,7 +38,7 @@ Board::Board() // default constructor
 				break;
 			case 'n':
 			case 'N':
-				this->_pieces[i * 8 + j] = new King(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+				this->_pieces[i * 8 + j] = new Knight(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				break;
 			case 'b':
 			case 'B':

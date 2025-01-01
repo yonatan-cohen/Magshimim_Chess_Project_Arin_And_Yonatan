@@ -132,6 +132,7 @@
     <ClCompile Include="..\..\filesForProject\stdafx.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Cord.cpp" />
+    <ClCompile Include="Knight.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Piece.cpp" />
   </ItemGroup>

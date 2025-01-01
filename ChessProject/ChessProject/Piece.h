@@ -15,6 +15,7 @@ private:
 	Board* _board;
 
 public:
+	Piece(Cord position, bool isBlack, Board* board, char type);
 	virtual ~Piece();
 
 	Cord getCord() const;
