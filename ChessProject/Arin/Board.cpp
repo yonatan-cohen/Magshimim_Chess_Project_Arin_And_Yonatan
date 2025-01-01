@@ -7,11 +7,12 @@
 #include "Bishop.h"
 #include "Rook.h"
 #include "Board.h"
+#include "Pawn.h"
 
 int Board::_turnNum = 0;
 Board::Board() // default constructor
 {
-	string sb = "rnbqkbnrpppppppp################################PPPPPPPPRNBQKBNR1";
+	string sb = "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR0";
 	// i = 1-8 , j = a-e
 	int i = 0, j = 0;
 	this->_pieces = new Piece*[64];
@@ -24,34 +25,34 @@ Board::Board() // default constructor
 			{
 			case '#':
 				//will be replaced by pawn later
-				this->_pieces[i*8 + j] = new King(Cord(j, i), !islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+				this->_pieces[i*8 + j] = NULL;
 				break;
 			case 'p':
 			case 'P':
-				this->_pieces[i * 8 + j] = new King(Cord(j, i), !islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+				this->_pieces[i * 8 + j] = new Pawn(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				break;
 			case 'r':
 			case 'R':
-				this->_pieces[i * 8 + j] = new Rook(Cord(j, i), !islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+				this->_pieces[i * 8 + j] = new Rook(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				break;
 			case 'n':
 			case 'N':
-				this->_pieces[i * 8 + j] = new Knight(Cord(j, i), !islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+				this->_pieces[i * 8 + j] = new Knight(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				break;
 			case 'b':
 			case 'B':
-				this->_pieces[i * 8 + j] = new Bishop(Cord(j, i), !islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+				this->_pieces[i * 8 + j] = new Bishop(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				break;
 			case 'q':
 			case 'Q':
-				this->_pieces[i * 8 + j] = new King(Cord(j, i), !islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+				this->_pieces[i * 8 + j] = new King(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				break;
 			case 'k': 
-				this->_blackKing = new King(Cord(j, i), !islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+				this->_blackKing = new King(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				this->_pieces[i * 8 + j] = this->_blackKing;
 				break;
 			case 'K':
-				this->_whiteKing = new King(Cord(j, i), !islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+				this->_whiteKing = new King(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				this->_pieces[i * 8 + j] = this->_whiteKing;
 				break;
 			default:
@@ -172,7 +173,10 @@ std::string Board::sendBoardToFrontend()
 	std::string rString = "";
 
 	for (int i = 0; i < 64; i++)
-		rString += this->_pieces[i]->getType();
+		if (this->_pieces[i] != NULL)
+			rString += this->_pieces[i]->getType();
+		else
+			rString += '#';
 
 	rString += std::to_string(this->_startingColor);
 	rString += '\0';
