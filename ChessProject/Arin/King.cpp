@@ -9,7 +9,7 @@ King::King(const Cord& position, const bool isBlack, Board* board, const char ty
 {}
 
 int King::isValidMove(Cord dest)
-{
+	{
 	Board* temp = this->getBoard();
 	int c = -1;
 	int d = 0;

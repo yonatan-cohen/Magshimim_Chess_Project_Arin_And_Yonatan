@@ -2,13 +2,11 @@
 #include <string>
 #include <cstring>
 #include <cctype>
-#include <iostream>
-
-#include "Board.h"
 #include "King.h"
-#include "Rook.h"
-#include "Bishop.h"
 #include "Knight.h"
+#include "Bishop.h"
+#include "Rook.h"
+#include "Board.h"
 
 int Board::_turnNum = 0;
 Board::Board() // default constructor
@@ -26,34 +24,34 @@ Board::Board() // default constructor
 			{
 			case '#':
 				//will be replaced by pawn later
-				this->_pieces[i*8 + j] = new King(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+				this->_pieces[i*8 + j] = new King(Cord(j, i), !islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				break;
 			case 'p':
 			case 'P':
-				this->_pieces[i * 8 + j] = new King(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+				this->_pieces[i * 8 + j] = new King(Cord(j, i), !islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				break;
 			case 'r':
 			case 'R':
-				this->_pieces[i * 8 + j] = new Rook(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+				this->_pieces[i * 8 + j] = new Rook(Cord(j, i), !islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				break;
 			case 'n':
 			case 'N':
-				this->_pieces[i * 8 + j] = new Knight(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+				this->_pieces[i * 8 + j] = new Knight(Cord(j, i), !islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				break;
 			case 'b':
 			case 'B':
-				this->_pieces[i * 8 + j] = new Bishop(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+				this->_pieces[i * 8 + j] = new Bishop(Cord(j, i), !islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				break;
 			case 'q':
 			case 'Q':
-				this->_pieces[i * 8 + j] = new King(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+				this->_pieces[i * 8 + j] = new King(Cord(j, i), !islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				break;
 			case 'k': 
-				this->_blackKing = new King(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+				this->_blackKing = new King(Cord(j, i), !islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				this->_pieces[i * 8 + j] = this->_blackKing;
 				break;
 			case 'K':
-				this->_whiteKing = new King(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+				this->_whiteKing = new King(Cord(j, i), !islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				this->_pieces[i * 8 + j] = this->_whiteKing;
 				break;
 			default:
@@ -156,7 +154,7 @@ int Board::reciveFronendInfo(std::string inputPipeStr)
 
 	Cord srcCord = Cord::stringToCord(srcCordstr);
 	Cord dstCord = Cord::stringToCord(dstCordstr);
-	return (*this->_pieces[srcCord.getY()*8 + srcCord.getX()]).move(dstCord);
+	return (*this->_pieces[(srcCord.getY() - 1) * 8 + srcCord.getX()]).move(dstCord);
 }
 
 // function returns the string that needs to be sent to frontend
