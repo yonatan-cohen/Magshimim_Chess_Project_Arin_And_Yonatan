@@ -14,6 +14,12 @@ int Knight::isValidMove(Cord dest)
     int dx = abs(dest.getX() - src.getX());
     int dy = abs(dest.getY() - src.getY());
 
+    // Check if it is the player's turn
+    if (this->getIsBlack() != this->getBoard()->_turn)
+    {
+        return 3; // Not the player's turn
+    }
+
     // Check if the move is a valid L-shape move for a Knight
     if ((dx == 2 && dy == 1) || (dx == 1 && dy == 2))
     {
@@ -33,7 +39,7 @@ int Knight::isValidMove(Cord dest)
                 {
                     if (piece->getIsBlack() != getIsBlack())
                     {
-						return 0; // Valid move
+                        return 0; // Valid move
                     }
                     else
                     {
@@ -44,5 +50,5 @@ int Knight::isValidMove(Cord dest)
         }
     }
 
-   return 2; // Invalid move
+    return 2; // Invalid move
 }
