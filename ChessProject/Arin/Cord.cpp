@@ -50,8 +50,8 @@ Cord Cord::stringToCord(std::string cord_string) // converts string to cord
     if (cord_string.length() != 2)
         return Cord();
     
-    int x = getGeometricValue(cord_string[0]);
-    int y = (cord_string[1] - '0');
+    int x = getGeometricValue(cord_string[0]) - 1;
+    int y = 8 - (cord_string[1] - '0');
 
     if (x < 0 || x > 7 || y < 0 || y > 7) return Cord(-1,-1);
 

@@ -44,5 +44,5 @@ int Knight::isValidMove(Cord dest)
         }
     }
 
-    return 2; // Invalid move
+   return 2; // Invalid move
 }

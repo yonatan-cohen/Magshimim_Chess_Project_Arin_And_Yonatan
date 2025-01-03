@@ -25,7 +25,7 @@ Board::Board() // default constructor
 			{
 			case '#':
 				//will be replaced by pawn later
-				this->_pieces[i*8 + j] = NULL;
+				this->_pieces[i*8 + j] =new Pawn(this);
 				break;
 			case 'p':
 			case 'P':
@@ -155,7 +155,7 @@ int Board::reciveFronendInfo(std::string inputPipeStr)
 
 	Cord srcCord = Cord::stringToCord(srcCordstr);
 	Cord dstCord = Cord::stringToCord(dstCordstr);
-	return (*this->_pieces[(srcCord.getY() - 1) * 8 + srcCord.getX()]).move(dstCord);
+	return (*this->_pieces[srcCord.getY() * 8 + srcCord.getX()]).move(dstCord);
 }
 
 // function returns the string that needs to be sent to frontend
@@ -173,11 +173,9 @@ std::string Board::sendBoardToFrontend()
 	std::string rString = "";
 
 	for (int i = 0; i < 64; i++)
-		if (this->_pieces[i] != NULL)
-			rString += this->_pieces[i]->getType();
-		else
-			rString += '#';
-
+	{
+		rString += this->_pieces[i]->getType();
+	}
 	rString += std::to_string(this->_startingColor);
 	rString += '\0';
 	return rString;

@@ -6,6 +6,7 @@
 class Pawn : public Piece
 {
 public:
+    Pawn(Board* board);
     Pawn(const Cord& position, const bool isBlack, Board* board, const char type);
     ~Pawn() override {}
 
