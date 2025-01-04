@@ -42,5 +42,6 @@ public:
 	Board* getBoard() const;
 
 	int move(Cord dest);
+	bool isPinned(Cord dest);
 	virtual int isValidMove(Cord dest) = 0;
 };
