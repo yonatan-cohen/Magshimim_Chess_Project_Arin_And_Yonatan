@@ -106,10 +106,6 @@ int Piece::move(Cord dest)
 		{
 			code = 1;
 		}
-		if ()
-		{
-
-		}
 		Piece* p = this;
 		Piece* pd = temp->getPieces()[dest.getY() * 8 + dest.getX()];
 		temp->getPieces()[dest.getY()*8 + dest.getX()] = p;
