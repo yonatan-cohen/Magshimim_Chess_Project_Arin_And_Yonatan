@@ -1,10 +1,9 @@
-#include "Bishop.h"
+#include "Queen.h"
 
-Bishop::Bishop(const Cord& position, const bool isBlack, Board* board, const char type) :
-	Piece(position,isBlack, board,type)
+Queen::Queen(const Cord& position, const bool isBlack, Board* board, const char type) : Piece(position, isBlack, board, type)
 {	}
 
-int Bishop::isValidMove(Cord dest)
+int Queen::isValidMove(Cord dest)
 {
 	int c = -1;
 
@@ -20,12 +19,11 @@ int Bishop::isValidMove(Cord dest)
 	{
 		x = this->getCord().getX() - dest.getX();
 		y = this->getCord().getY() - dest.getY();
-		// if the Src and dest are the same
 		if ((this->getCord().getX() == dest.getX()) && (this->getCord().getY() == dest.getY()))
 		{
 			c = 7;
 		}
-		else if (abs(x) == abs(y))
+		else if ((abs(x) == abs(y)) || (!x || !y))
 		{
 			if (temp->isEmptyLine(this->getCord(), dest))
 			{

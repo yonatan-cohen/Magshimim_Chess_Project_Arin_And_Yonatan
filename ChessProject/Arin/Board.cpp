@@ -8,6 +8,7 @@
 #include "Rook.h"
 #include "Board.h"
 #include "Pawn.h"
+#include "Queen.h"
 
 int Board::_turnNum = 0;
 Board::Board() // default constructor
@@ -24,7 +25,6 @@ Board::Board() // default constructor
 			switch (sb[i * 8 + j])
 			{
 			case '#':
-				//will be replaced by pawn later
 				this->_pieces[i*8 + j] =new Pawn(this);
 				break;
 			case 'p':
@@ -45,7 +45,7 @@ Board::Board() // default constructor
 				break;
 			case 'q':
 			case 'Q':
-				this->_pieces[i * 8 + j] = new King(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
+				this->_pieces[i * 8 + j] = new Queen(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
 				break;
 			case 'k': 
 				this->_blackKing = new King(Cord(j, i), islower(sb[i * 8 + j]), this, sb[i * 8 + j]);
@@ -107,17 +107,24 @@ bool Board::isEmptyLine(Cord src, Cord dst) const
 	bool notEmpty = false;
 	int x, y, i;
 	int ix, iy;
+	/*
+	* ax/y - going foward or backward in x/y
+	* ax/y = 1 - foward
+	* ax/y = -1 - backward
+	*/
+	int ax = 1, ay = 1;
+
 	x = dst.getX() - src.getX();
 	y = dst.getY() - src.getY();
 	ix = src.getX();
 	iy = src.getY();
 	if (x < 0)
 	{
-		ix = dst.getX();
+		ax = -1;
 	}
 	if (y < 0)
 	{
-		iy = dst.getY();
+		ay = -1;
 	}
 	x = abs(x);
 	y = abs(y);
@@ -125,21 +132,21 @@ bool Board::isEmptyLine(Cord src, Cord dst) const
 	{
 		for (i = 1; i < x; i++)
 		{
-			notEmpty += !(this->isEmpty(Cord(ix + i, iy)));
+			notEmpty += !(this->isEmpty(Cord(ix + ax*i, iy)));
 		}
 	}
 	else if(y && !x)
 	{
 		for (i = 1; i < y; i++)
 		{
-			notEmpty += !(this->isEmpty(Cord(ix, iy + i)));
+			notEmpty += !(this->isEmpty(Cord(ix, iy + ay*i)));
 		}
 	}
 	else
 	{
 		for (i = 1; i < x; i++)
 		{
-			notEmpty += !(this->isEmpty(Cord(ix + i, iy + i)));
+			notEmpty += !(this->isEmpty(Cord(ix + ax*i, iy + ay*i)));
 		}
 	}
 	return !notEmpty;

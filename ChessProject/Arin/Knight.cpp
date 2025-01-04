@@ -7,48 +7,55 @@ Knight::Knight(const Cord& position, const bool isBlack, Board* board, const cha
 
 int Knight::isValidMove(Cord dest)
 {
-    // Get the current position of the Knight
+    //return code
+    int c = -1;
+
+    // Get the current position and the board of the Knight
     Cord src = getCord();
+    Board* temp = this->getBoard();
 
     // Calculate the difference in x and y coordinates
     int dx = abs(dest.getX() - src.getX());
     int dy = abs(dest.getY() - src.getY());
 
-    // Check if it is the player's turn
-    if (this->getIsBlack() != this->getBoard()->_turn)
+    // Check if the destination is out of the Board
+    if (dest.getX() > 7 || dest.getX() < 0 || dest.getY() > 7 || dest.getY() < 0)
     {
-        return 3; // Not the player's turn
+        c = 5; // destination outside the Board
     }
-
-    // Check if the move is a valid L-shape move for a Knight
-    if ((dx == 2 && dy == 1) || (dx == 1 && dy == 2))
+    // Check if it is the knight's player's turn
+    else if (this->getIsBlack() == this->getBoard()->_turn)
     {
-        // Check if the destination is either empty or contains an opponent's piece
-        if (this->getBoard()->isEmpty(dest))
+        //Check if the current position and the destination are the same
+        if ((src.getX() == dest.getX()) && (src.getY() == dest.getY()))
         {
-            return 0; // Valid move
+            c = 7;
+        }
+        // Check if the move is a valid L-shape move for a Knight
+        else if ((dx == 2 && dy == 1) || (dx == 1 && dy == 2))
+        {
+            // Check if the destination is either empty or contains an opponent's piece
+            if (this->getBoard()->isEmpty(dest))
+            {
+                c =  0; // Valid move
+            }
+            else if ((*temp->getPieces()[dest.getY() * 8 + dest.getX()]).getIsBlack() != temp->_turn)
+            {
+                c = 0; // Valid move, Ate an opponent's piece
+            }
+            else
+            {
+                c = 3; // Destination has the player's piece
+            }
         }
         else
         {
-            // Iterate through the pieces to find the piece at the destination
-            Piece** pieces = this->getBoard()->getPieces();
-            for (int i = 0; i < this->getBoard()->getWidth() * this->getBoard()->getLength(); ++i)
-            {
-                Piece* piece = pieces[i];
-                if (piece != nullptr && piece->getCord().getX() == dest.getX() && piece->getCord().getY() == dest.getY())
-                {
-                    if (piece->getIsBlack() != getIsBlack())
-                    {
-                        return 0; // Valid move
-                    }
-                    else
-                    {
-                        return 1; // Destination occupied by same color piece
-                    }
-                }
-            }
+            c = 6;
         }
     }
-
-    return 2; // Invalid move
+    else
+    {
+        c = 2; // Not the player's turn
+    }
+    return c; // Invalid move
 }

@@ -19,7 +19,11 @@ int Rook::isValidMove(Cord dest)
 	{
 		x = this->getCord().getX() - dest.getX();
 		y = this->getCord().getY() - dest.getY();
-		if (!x || !y)
+		if ((this->getCord().getX() == dest.getX()) && (this->getCord().getY() == dest.getY()))
+		{
+			c = 7;
+		}
+		else if (!x || !y)
 		{
 			if (temp->isEmptyLine(this->getCord(), dest))
 			{
@@ -41,10 +45,6 @@ int Rook::isValidMove(Cord dest)
 			{
 				c = 6;
 			}
-		}
-		else if ((this->getCord().getX() == dest.getX()) && (this->getCord().getY() == dest.getY()))
-		{
-			c = 7;
 		}
 		else
 		{

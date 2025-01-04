@@ -25,7 +25,11 @@ int King::isValidMove(Cord dest)
 		x = this->getCord().getX() - dest.getX();
 		y = this->getCord().getY() - dest.getY();
 		d = sqrt(pow(x, 2) + pow(y, 2));
-		if (d == 1)
+		if ((this->getCord().getX() == dest.getX()) && (this->getCord().getY() == dest.getY()))
+		{
+			c = 7;
+		}
+		else if (d == 1)
 		{
 			c = 0;
 			if (temp->isEmpty(dest))
@@ -40,10 +44,6 @@ int King::isValidMove(Cord dest)
 			{
 				c = 3;
 			}
-		}
-		else if ((this->getCord().getX() == dest.getX()) && (this->getCord().getY() == dest.getY()) )
-		{
-			c = 7;
 		}
 		else
 		{

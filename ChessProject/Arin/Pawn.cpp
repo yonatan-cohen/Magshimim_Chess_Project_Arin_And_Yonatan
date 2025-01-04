@@ -38,6 +38,11 @@ int Pawn::isValidMove(Cord dest)
 	//if the pawn is the player's pawn
 	else if (temp->_turn == this->getIsBlack() && this->getType() != '#')
 	{
+		// the dest and src are the same
+		if ((src.getX() == dest.getX()) && (src.getY() == dest.getY()))
+		{
+			c = 7;
+		}
 		//if the pawn can move there
 		if (!dx && (dy == 1 || dy == 2 && firstMove ))
 		{
@@ -50,6 +55,11 @@ int Pawn::isValidMove(Cord dest)
 
 					c = 0;
 				}
+				// if the pawn eats another piece
+				else if ((*temp->getPieces()[dest.getY() * 8 + dest.getX()]).getIsBlack() != temp->_turn)
+				{
+					c = 1;
+				}
 				//there is the player piece in dest
 				else
 				{
@@ -61,17 +71,6 @@ int Pawn::isValidMove(Cord dest)
 			{
 				c = 6;
 			}
-		}
-		// if the pawn eats another piece
-        else if (temp->getPieces()[dest.getY() * 8 + dest.getX()]->getIsBlack() != temp->_turn &&
-        (dest.getX() - 1 == src.getX() || dest.getX() + 1 == src.getX()) && dy == 1)
-		{
-			c = 1;
-		}
-		// the dest and src are the same
-		else if ((src.getX() == dest.getX()) && (src.getY() == dest.getY()))
-		{
-			c = 7;
 		}
 		//the pawn can't move there
 		else
