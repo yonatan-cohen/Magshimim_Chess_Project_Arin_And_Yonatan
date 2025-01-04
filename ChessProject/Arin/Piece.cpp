@@ -7,9 +7,18 @@ bool Piece::isPinned(Cord dest)
 	Board* b = this->getBoard();
 	King* king = NULL;
 	Cord ogCord = this->getCord();
-	this->_position = dest;
-	this->getBoard()->_turn = !this->getBoard()->_turn;
-	this->getBoard()->_turnNum++;
+	
+	// move temporarily
+	Piece* p = this;
+	Piece* pd = this->_board->getPieces()[dest.getY() * 8 + dest.getX()];
+	this->_board->getPieces()[dest.getY() * 8 + dest.getX()] = p;
+	this->_board->getPieces()[this->getCord().getY() * 8 + this->getCord().getX()] = pd;
+	pd->_type = '#';
+	pd->_isBlack = false;
+	p->_position = dest;
+	this->_board->_turnNum++;
+	this->_board->_turn = !this->_board->_turn;
+
 	int ischeck = -1;
 	bool rValue = false;
 
@@ -32,9 +41,17 @@ bool Piece::isPinned(Cord dest)
 			}
 		}
 	}
-	this->_position = ogCord;
-	this->getBoard()->_turn = !this->getBoard()->_turn;
-	this->getBoard()->_turnNum--;
+	
+	// undo move
+	p = this;
+	pd = this->_board->getPieces()[ogCord.getY() * 8 + ogCord.getX()];
+	this->_board->getPieces()[ogCord.getY() * 8 + ogCord.getX()] = p;
+	this->_board->getPieces()[this->getCord().getY() * 8 + this->getCord().getX()] = pd;
+	pd->_type = '#';
+	pd->_isBlack = false;
+	p->_position = ogCord;
+	this->_board->_turnNum++;
+	this->_board->_turn = !this->_board->_turn;
 	return rValue;
 }
 
@@ -71,8 +88,8 @@ int Piece::move(Cord dest)
 {
 	int code = -1;
 	code = this->isValidMove(dest);
-	/* if ((code == 0 || code == 1 || code == 8) && this->isPinned(dest))
-		code = 4; */
+	if ((code == 0 || code == 1 || code == 8) && this->isPinned(dest))
+		code = 4;
 		
 	if (code == 0 || code == 1 || code == 8)
 	{
