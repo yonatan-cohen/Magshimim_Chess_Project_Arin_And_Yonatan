@@ -6,19 +6,30 @@
 class Cord
 {
 private:
-	int _x;
-	int _y;
+    // coordinate
+    int _x;
+    int _y;
 
 public:
-	Cord();
-	Cord(int x, int y);
+    // Default constructor
+    Cord();
 
-	~Cord();
-	Cord(const Cord& other);
-	Cord& operator=(const Cord& other);
+    // Parameterized constructor
+    Cord(int x, int y);
 
-	int getX() const;
-	int getY() const;
+    // Destructor
+    ~Cord();
 
-	static Cord stringToCord(std::string cord_string);
+    // Copy constructor
+    Cord(const Cord& other);
+
+    // Assignment operator
+    Cord& operator=(const Cord& other);
+
+    // Getters
+    int getX() const;
+    int getY() const;
+
+    // Static method to convert string to Cord object
+    static Cord stringToCord(std::string cord_string);
 };

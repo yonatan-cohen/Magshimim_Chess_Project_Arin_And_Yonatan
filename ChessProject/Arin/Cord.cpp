@@ -42,7 +42,6 @@ Cord& Cord::operator=(const Cord& other) // essignment operator
 
 // getters
 int Cord::getX() const { return _x; }
-
 int Cord::getY() const { return _y; }
 
 Cord Cord::stringToCord(std::string cord_string) // converts string to cord
