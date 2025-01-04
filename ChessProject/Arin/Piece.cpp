@@ -1,6 +1,24 @@
 #include "Piece.h"
 #include "King.h"
 
+
+bool check(Piece** pieces,King* king, bool isBlack)
+{
+	int isCheck = -1;
+	for (int i = 0; i < 64; i++)
+	{
+		if (pieces[i] != NULL && pieces[i]->getIsBlack() != isBlack)
+		{
+			isCheck = pieces[i]->isValidMove(king->getCord());
+			if (isCheck == 0)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 bool Piece::isPinned(Cord dest)
 {
 	// we assume piece move is valid
@@ -10,16 +28,15 @@ bool Piece::isPinned(Cord dest)
 	
 	// move temporarily
 	Piece* p = this;
-	Piece* pd = this->_board->getPieces()[dest.getY() * 8 + dest.getX()];
-	this->_board->getPieces()[dest.getY() * 8 + dest.getX()] = p;
-	this->_board->getPieces()[this->getCord().getY() * 8 + this->getCord().getX()] = pd;
+	Piece* pd = b->getPieces()[dest.getY() * 8 + dest.getX()];
+	b->getPieces()[dest.getY() * 8 + dest.getX()] = p;
+	b->getPieces()[this->getCord().getY() * 8 + this->getCord().getX()] = pd;
 	pd->_type = '#';
 	pd->_isBlack = false;
 	p->_position = dest;
-	this->_board->_turnNum++;
-	this->_board->_turn = !this->_board->_turn;
+	b->_turnNum++;
+	b->_turn = !b->_turn;
 
-	int ischeck = -1;
 	bool rValue = false;
 
 	if (this->getIsBlack())
@@ -28,28 +45,19 @@ bool Piece::isPinned(Cord dest)
 		king = b->getWhiteKing();
 
 	Piece** pieces = b->getPieces();
-	for (int i = 0; i < 64; i++)
-	{
-		if (pieces[i] != NULL && pieces[i]->getIsBlack() != this->getIsBlack())
-		{
-			ischeck = pieces[i]->isValidMove(king->getCord());
-            if (ischeck == 0 || ischeck == 1 || ischeck == 8)
-			{
-				rValue = true;
-			}
-		}
-	}
+
+	rValue = check(pieces,king,this->getIsBlack());
 	
 	// undo move
 	p = this;
-	pd = this->_board->getPieces()[ogCord.getY() * 8 + ogCord.getX()];
-	this->_board->getPieces()[ogCord.getY() * 8 + ogCord.getX()] = p;
-	this->_board->getPieces()[this->getCord().getY() * 8 + this->getCord().getX()] = pd;
+	pd = b->getPieces()[ogCord.getY() * 8 + ogCord.getX()];
+	b->getPieces()[ogCord.getY() * 8 + ogCord.getX()] = p;
+	b->getPieces()[this->getCord().getY() * 8 + this->getCord().getX()] = pd;
 	pd->_type = '#';
 	pd->_isBlack = false;
 	p->_position = ogCord;
-	this->_board->_turnNum++;
-	this->_board->_turn = !this->_board->_turn;
+	b->_turnNum++;
+	b->_turn = !b->_turn;
 	return rValue;
 }
 
@@ -86,20 +94,31 @@ int Piece::move(Cord dest)
 {
 	int code = -1;
 	code = this->isValidMove(dest);
-	if ((code == 0 || code == 1 || code == 8) && this->isPinned(dest))
-		code = 4;
-		
-	if (code == 0 || code == 1 || code == 8)
+	if (code == 0 && this->isPinned(dest))
 	{
+		code = 4;
+	}
+	if (code == 0)
+	{
+		Board* temp = this->getBoard();
+		King* king = this->getIsBlack() ? temp->getWhiteKing() : temp->getBlackKing();
+		if (check(temp->getPieces(),king,!this->getIsBlack()))
+		{
+			code = 1;
+		}
+		if ()
+		{
+
+		}
 		Piece* p = this;
-		Piece* pd = this->_board->getPieces()[dest.getY() * 8 + dest.getX()];
-		this->_board->getPieces()[dest.getY()*8 + dest.getX()] = p;
-		this->_board->getPieces()[this->getCord().getY() * 8 + this->getCord().getX()] = pd;
+		Piece* pd = temp->getPieces()[dest.getY() * 8 + dest.getX()];
+		temp->getPieces()[dest.getY()*8 + dest.getX()] = p;
+		temp->getPieces()[this->getCord().getY() * 8 + this->getCord().getX()] = pd;
 		pd->_type = '#';
 		pd->_isBlack = false;
 		p->_position = dest;
-		this->_board->_turnNum++;
-		this->_board->_turn = !this->_board->_turn;
+		temp->_turnNum++;
+		temp->_turn = !temp->_turn;
 	}
 	return code;
 }
