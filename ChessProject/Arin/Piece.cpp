@@ -32,8 +32,6 @@ bool Piece::isPinned(Cord dest)
 	{
 		if (pieces[i] != NULL && pieces[i]->getIsBlack() != this->getIsBlack())
 		{
-			if (pieces[i]->getType() == 'R' || pieces[i]->getType() == 'r')
-				int x = 0;
 			ischeck = pieces[i]->isValidMove(king->getCord());
             if (ischeck == 0 || ischeck == 1 || ischeck == 8)
 			{
