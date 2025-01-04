@@ -8,8 +8,12 @@ bool Piece::isPinned(Cord dest)
 	King* king = NULL;
 	Cord ogCord = this->getCord();
 	this->_position = dest;
+	this->getBoard()->_turn = !this->getBoard()->_turn;
+	this->getBoard()->_turnNum++;
+	int ischeck = -1;
+	bool rValue = false;
 
-	if (p->getIsBlack())
+	if (this->getIsBlack())
 		king = b->getBlackKing();
 	else
 		king = b->getWhiteKing();
@@ -17,17 +21,21 @@ bool Piece::isPinned(Cord dest)
 	Piece** pieces = b->getPieces();
 	for (int i = 0; i < 64; i++)
 	{
-		if (pieces[i] != NULL && pieces[i]->getIsBlack() != p->getIsBlack())
+		if (pieces[i] != NULL && pieces[i]->getIsBlack() != this->getIsBlack())
 		{
-            if (pieces[i]->isValidMove(king->getCord()) == 0)
+			if (pieces[i]->getType() == 'R' || pieces[i]->getType() == 'r')
+				int x = 0;
+			ischeck = pieces[i]->isValidMove(king->getCord());
+            if (ischeck == 0 || ischeck == 1 || ischeck == 8)
 			{
-				p->_position = ogCord;
-				return true;
+				rValue = true;
 			}
 		}
 	}
-	p->_position = ogCord;
-	return false;
+	this->_position = ogCord;
+	this->getBoard()->_turn = !this->getBoard()->_turn;
+	this->getBoard()->_turnNum--;
+	return rValue;
 }
 
 
@@ -63,8 +71,8 @@ int Piece::move(Cord dest)
 {
 	int code = -1;
 	code = this->isValidMove(dest);
-	if (code == 0 || code == 1 || code == 8 && this->isPinned(dest))
-		code = 4;
+	/* if ((code == 0 || code == 1 || code == 8) && this->isPinned(dest))
+		code = 4; */
 		
 	if (code == 0 || code == 1 || code == 8)
 	{
