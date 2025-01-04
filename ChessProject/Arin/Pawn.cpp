@@ -58,7 +58,7 @@ int Pawn::isValidMove(Cord dest)
 				// if the pawn eats another piece
 				else if ((*temp->getPieces()[dest.getY() * 8 + dest.getX()]).getIsBlack() != temp->_turn)
 				{
-					c = 1;
+					c = 0;
 				}
 				//there is the player piece in dest
 				else

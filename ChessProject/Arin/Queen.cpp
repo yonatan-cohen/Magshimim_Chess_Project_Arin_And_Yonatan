@@ -34,7 +34,7 @@ int Queen::isValidMove(Cord dest)
 				}
 				else if ((*temp->getPieces()[dest.getY() * 8 + dest.getX()]).getIsBlack() != temp->_turn)
 				{
-					c = 1;
+					c = 0;
 				}
 				else
 				{
